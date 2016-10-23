@@ -78,7 +78,8 @@
     "pretest": "npm run build",
     "release": "./scripts/release.sh",
     "serve": "nodemon --watch src --exec 'npm run build' & http-server -p 5678 -c-1 -o",
-    "test": "npm run lint && karma start"
+    "test": "npm run lint && karma start",
+    "start": "watch \"npm run build\" src & http-server -p 5678 -c-1 -o"
   },
   "style": "./dist/esri-leaflet-geocoder.css"
 }
