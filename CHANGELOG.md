@@ -1,12 +1,69 @@
 # Changelog
 
-## [Unreleased]
+## [Upcoming changes][Unreleased]
 
-## [2.0.2]
+## [2.1.4]
+
+### Fixed
+
+* the loading icon is now cleared when a search returns no results [#142](https://github.com/Esri/esri-leaflet-geocoder/pull/142)
+* sub queries are now concatenated correctly when a filter is applied to the `FeatureLayer` being searched. [#144](https://github.com/Esri/esri-leaflet-geocoder/pull/144)
+
+## [2.1.3]
+
+### Fixed
+
+* botched the last npm release
+
+## [2.1.2]
+
+### Fixed
+
+* 'Powered by Esri' is now displayed in map attribution when the ArcGIS Online World Geocoding service is used in geosearch instead of 'Geocoding by Esri' [#134](https://github.com/Esri/esri-leaflet-geocoder/pull/134)
+
+### Added
+* We now expose a `where` constructor parameter for featureLayerProvider so that developers can filter features which will be matched to user searches. [#136](https://github.com/Esri/esri-leaflet-geocoder/pull/136)
+
+* The geosearch control now utilizes the `arcgisOnlineProvider` by default if no provider is specified in the object constructor. [#137](https://github.com/Esri/esri-leaflet-geocoder/pull/137)
+
+## [2.1.1]
+
+### Fixed
+
+* ensure that setting `maxResults` limits the number of suggestions provided by `L.esri.Geocoding.geosearch`, not just final results [#124](https://github.com/Esri/esri-leaflet-geocoder/pull/124)
+
+* trap situation in which geocoding service returns more than one candidate even though request includes a `magicKey` [#129](https://github.com/Esri/esri-leaflet-geocoder/pull/129)
+
+* improved support for custom Esri geocoding services in `geosearch` [#124](https://github.com/Esri/esri-leaflet-geocoder/pull/124)
+
+## [2.1.0]
 
 ### Added
 
-* exposed a parameter in `reverseGeocode` requests to fetch intersections.
+* new `enable()` and `disable()` methods to programmatically control `geosearch`. [./pull/121](https://github.com/Esri/esri-leaflet-geocoder/pull/121)
+
+### Fixed
+
+* ensure that the map is zoomed to the bounding box of matches, not street level. [./pull/123](https://github.com/Esri/esri-leaflet-geocoder/pull/123)
+* made sure Esri's copyright text is included in the concatenated, minified build of the library. ae9dea4
+* changed a string introspection to make grumpy old IE happy. [pull/127](https://github.com/Esri/esri-leaflet-geocoder/pull/127)
+
+### Changed
+
+* Build system refactored to use latest Rollup and Rollup plugins.
+* Reworked bundling directives for various modules systems to resolve and simplify various issues
+  * WebPack users no longer have to use the Babel loader.
+  * Babelify with Babel 6 now works
+* refactored `geosearch` into a base class and inherited control to lay the groundwork for other UI components that live outside the map. [pull/102](https://github.com/Esri/esri-leaflet-geocoder/pull/102)
+* use `https` consistently when making requests to the World Geocoding services instead of inheriting protocol from the parent application. 388ba04
+
+## [2.0.3]
+
+### Added
+
+* new `searchBounds` parameter for `L.esri.Geocoding.geosearch` for filtering using a static bounding box. (#115 thanks to @nathanhilbert!)
+
+## [2.0.2]
 
 ### Fixed
 
@@ -172,8 +229,14 @@ This is now ready for beta! This release helps finalize the API and includes lot
 
 * Initial alpha release
 
-[Unreleased]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.2...HEAD
-[2.0.1]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.1...v2.0.2
+[Unreleased]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.1.4...HEAD
+[2.1.4]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.1.3...v2.1.4
+[2.1.3]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.1.1...v2.1.2
+[2.1.1]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.1.0...v2.1.1
+[2.1.0]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.3...v2.1.0
+[2.0.3]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.0-beta.3...v2.0.0
 [2.0.0-beta.3]: https://github.com/Esri/esri-leaflet-geocoder/compare/v2.0.0-beta.2...v2.0.0-beta.3

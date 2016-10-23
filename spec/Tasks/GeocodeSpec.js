@@ -27,7 +27,7 @@ describe('L.esri.Geocode', function () {
     ]
   });
 
-  var sampleFindAddressCanidatesResponse = JSON.stringify({
+  var samplefindAddressCandidatesResponse = JSON.stringify({
     'spatialReference': {
       'wkid': 4326,
       'latestWkid': 4326
@@ -264,7 +264,7 @@ describe('L.esri.Geocode', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, sampleFindResponse);
   });
 
-  it('should make a findAddressCanidates request to ArcGIS Online', function (done) {
+  it('should make a findAddressCandidates request to ArcGIS Online', function (done) {
     var request = new L.esri.Geocoding.geocode().address('380 New York St').city('Redlands').region('California').postal(92373).run(function (err, response) {
       expect(response.results[0].latlng.lat).to.equal(34.056490727765947);
       expect(response.results[0].latlng.lng).to.equal(-117.19566584280369);
@@ -280,10 +280,10 @@ describe('L.esri.Geocode', function () {
     expect(request.url).to.contain('region=California');
     expect(request.url).to.contain('postal=92373');
 
-    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, sampleFindAddressCanidatesResponse);
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, samplefindAddressCandidatesResponse);
   });
 
-  it('should make a findAddressCanidates request to a Geocode Service', function (done) {
+  it('should make a findAddressCandidates request to a Geocode Service', function (done) {
     var request = new L.esri.Geocoding.geocode({
       url: 'http://gis.example.com/arcgis/rest/services/Geocoder'
     }).address('380 New York St').city('Redlands').region('California').postal(92373).run(function (err, response) {
@@ -301,7 +301,7 @@ describe('L.esri.Geocode', function () {
     expect(request.url).to.contain('region=California');
     expect(request.url).to.contain('postal=92373');
 
-    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, sampleFindAddressCanidatesResponse);
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, samplefindAddressCandidatesResponse);
   });
 
   it('should make a `within` request to ArcGIS Online', function (done) {
@@ -346,6 +346,20 @@ describe('L.esri.Geocode', function () {
     expect(request.url).to.contain('distance=10000');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, sampleFindNearbyResponse);
+  });
+
+  it('should send the correct params to the right operation for custom geocoding services', function (done) {
+    var request = L.esri.Geocoding.geocode({
+      url: 'http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/TA_Address_NA_10/GeocodeServer',
+      customParam: 'SingleLine'
+    }).text('Highlands Ranch').run(function (err, response) {
+      done();
+    });
+
+    expect(request.url).to.contain('//tasks.arcgisonline.com/ArcGIS/rest/services/Locators/TA_Address_NA_10/GeocodeServer/findAddressCandidates');
+    expect(request.url).to.contain('SingleLine=Highlands%20Ranch');
+
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, samplefindAddressCandidatesResponse);
   });
 
 });
